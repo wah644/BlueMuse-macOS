@@ -10,3 +10,11 @@ corebluetooth
 swiftui
 biosignals
 neuroscience
+muse-2016
+muse-2
+muse-s
+muse-athena
+smith-lowdown-focus
+eeg-streaming
+brain-computer-interface
+signal-visualization

@@ -8,6 +8,15 @@ using BlueMuse.MuseManagement;
 class Program {
     static double[][] Rows(double[,] m) => Enumerable.Range(0,m.GetLength(0)).Select(r=>Enumerable.Range(0,m.GetLength(1)).Select(c=>m[r,c]).ToArray()).ToArray();
     static void Main(string[] args) {
+        if (args.Length == 1 && args[0] == "--athena-self-check") {
+            Environment.ExitCode = BlueMuse.Athena.Tests.Program.Main();
+            return;
+        }
+        if (args.Length != 1) {
+            Console.Error.WriteLine("Usage: BlueMuse.Parity.Tests <fixture-output.json> | --athena-self-check");
+            Environment.ExitCode = 2;
+            return;
+        }
         var random=new Random(843612); var fixtures=new List<object>();
         foreach(var kind in new[]{"eeg","ppg","accelerometer","gyroscope","telemetry"}) {
             for(int n=0;n<100;n++) {

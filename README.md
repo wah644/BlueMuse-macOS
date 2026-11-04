@@ -178,7 +178,7 @@ Optional: regenerate fixtures and run the upstream Athena self-check with .NET 9
 
 ```sh
 dotnet run --project Tests/BlueMuse.Parity.Tests -- Tests/BlueMuseCoreTests/Fixtures/windows-decoder-fixtures.json
-dotnet run --project Tests/BlueMuse.Parity.Tests -p:StartupObject=BlueMuse.Athena.Tests.Program --no-restore
+dotnet run --project Tests/BlueMuse.Parity.Tests --no-restore -- --athena-self-check
 ```
 
 Tests publish short-lived synthetic LSL streams and require local networking. UI

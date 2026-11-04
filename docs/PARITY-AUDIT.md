@@ -108,7 +108,7 @@ that another Bluetooth implementation will have identical reliability.
 ```sh
 # From the repository root, with .NET 9 installed:
 dotnet run --project Tests/BlueMuse.Parity.Tests -- Tests/BlueMuseCoreTests/Fixtures/windows-decoder-fixtures.json
-dotnet run --project Tests/BlueMuse.Parity.Tests -p:StartupObject=BlueMuse.Athena.Tests.Program --no-restore
+dotnet run --project Tests/BlueMuse.Parity.Tests --no-restore -- --athena-self-check
 BLUEMUSE_LSL_LIBRARY="$PWD/Vendor/lsl.framework/lsl" swift test 
 bash scripts/build-app.sh
 ```
