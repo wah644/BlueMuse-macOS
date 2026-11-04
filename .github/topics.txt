@@ -1,0 +1,12 @@
+bluemuse
+muse
+muse-eeg
+eeg
+macos
+lsl
+lab-streaming-layer
+bluetooth-low-energy
+corebluetooth
+swiftui
+biosignals
+neuroscience

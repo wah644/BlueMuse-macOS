@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="280" viewBox="0 0 1200 280" role="img" aria-labelledby="title desc">
+<title id="title">BlueMuse for macOS</title><desc id="desc">Stream Muse EEG headsets to Lab Streaming Layer on your Mac.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#07182d"/><stop offset="1" stop-color="#133d59"/></linearGradient><linearGradient id="wave"><stop stop-color="#57d9ed"/><stop offset="1" stop-color="#a7f3d0"/></linearGradient></defs>
+<rect width="1200" height="280" rx="24" fill="url(#bg)"/>
+<g stroke="#70b6ce" stroke-opacity=".09"><path d="M750 40v200M800 40v200M850 40v200M900 40v200M950 40v200M1000 40v200M1050 40v200M1100 40v200M1150 40v200M730 80h440M730 140h440M730 200h440"/></g>
+<text x="52" y="87" fill="#f4f9ff" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="44" font-weight="700">BlueMuse for macOS</text>
+<text x="54" y="133" fill="#bde8f4" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="23">Muse EEG → Lab Streaming Layer</text>
+<text x="54" y="171" fill="#95b6c7" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="17">Connect your headset. See your signals. Build your receiver.</text>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14" fill="#c5ebf5"><rect x="54" y="206" width="104" height="30" rx="15" fill="#ffffff" fill-opacity=".07"/><text x="75" y="226">macOS 13+</text><rect x="170" y="206" width="118" height="30" rx="15" fill="#ffffff" fill-opacity=".07"/><text x="188" y="226">Bluetooth LE</text><rect x="300" y="206" width="167" height="30" rx="15" fill="#ffffff" fill-opacity=".07"/><text x="318" y="226">Apple Silicon + Intel</text></g>
+<g fill="none" stroke="url(#wave)" stroke-width="4" stroke-linecap="round"><path d="M745 110Q767 110 778 85T805 110T832 110T859 110T886 110T913 110T940 110T967 110T994 110T1021 110T1048 110T1075 110T1102 110T1129 110T1156 110"/><path opacity=".65" d="M745 165Q771 165 783 145T817 165T851 165T885 165T919 165T953 165T987 165T1021 165T1055 165T1089 165T1123 165T1157 165"/></g></svg>

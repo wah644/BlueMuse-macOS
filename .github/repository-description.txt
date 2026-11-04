@@ -1,0 +1,1 @@
+macOS app to stream Muse EEG headsets via LSL (Lab Streaming Layer), with live graphs and one-click four-channel EEG streaming.

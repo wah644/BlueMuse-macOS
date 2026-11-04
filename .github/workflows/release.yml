@@ -1,0 +1,40 @@
+name: Build downloadable macOS release
+on:
+  push:
+    tags: ['v[0-9]*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify tag version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo 'Use a tag such as v1.0.0'; exit 1; }
+      - name: Test
+        env:
+          BLUEMUSE_LSL_LIBRARY: ${{ github.workspace }}/Vendor/lsl.framework/lsl
+        run: swift test
+      - name: Build universal DMG
+        env:
+          VERSION: ${{ github.ref_name }}
+          BUILD_NUMBER: ${{ github.run_number }}
+          BUILD_ARCHS: universal
+          SOURCE_REPOSITORY: ${{ github.server_url }}/${{ github.repository }}
+        run: bash scripts/package-dmg.sh
+      - name: Create draft release with downloads
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo 'A release already exists for this tag; leaving its assets unchanged.'
+            exit 0
+          fi
+          image="$(cat dist/release-artifact.txt)"
+          gh release create "$TAG" --verify-tag --draft --prerelease \
+            --title "BlueMuse for macOS $TAG" --notes-file dist/RELEASE-NOTES.md \
+            "$image" "$image.sha256" "$image.json"

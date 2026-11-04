@@ -1,0 +1,24 @@
+name: macOS checks
+on:
+  push:
+  pull_request:
+jobs:
+  test-and-build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Regenerate original C# fixtures
+        run: dotnet run --project Tests/BlueMuse.Parity.Tests -- Tests/BlueMuseCoreTests/Fixtures/windows-decoder-fixtures.json
+      - name: Check fixture reproducibility
+        run: git diff --exit-code -- Tests/BlueMuseCoreTests/Fixtures
+      - name: Original Athena checks
+        run: dotnet run --project Tests/BlueMuse.Parity.Tests -p:StartupObject=BlueMuse.Athena.Tests.Program --no-restore
+      - name: Swift tests
+        env:
+          BLUEMUSE_LSL_LIBRARY: ${{ github.workspace }}/Vendor/lsl.framework/lsl
+        run: swift test
+      - name: Build app
+        run: bash scripts/build-app.sh

@@ -1,0 +1,18 @@
+# Build products and local environments
+.build/
+.swiftpm/
+dist/
+.venv/
+venv/
+**/bin/
+**/obj/
+__pycache__/
+*.pyc
+.DS_Store
+xcuserdata/
+# Private recordings and logs
+*.log
+*.csv
+*.xdf
+.env
+.env.*

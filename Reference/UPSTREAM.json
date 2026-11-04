@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/kowalej/BlueMuse",
+  "snapshot": "Files supplied with the original Windows source; upstream commit not recorded.",
+  "sha256": {
+    "BlueMuse.App/Misc/Constants.cs": "0272417a77fe256af7b7118104cd76486de6779a9e5e13e036336409974fdac9",
+    "BlueMuse.App/Helpers/PacketConversion.cs": "93be8fb06647e9636278259e14c05a83a1e884ff089caf5ac8cf435454cc569f",
+    "BlueMuse.App/MuseManagement/MuseEEGSamples.cs": "2eb283e243a62ed3efdda885c0c378aca0a61a059eb2748b45defb4623b211f2",
+    "BlueMuse.App/MuseManagement/MuseAccelerometerSamples.cs": "460995a69c7ce72732c87e94db7ede13a1601f988bb122f75f476f3c1e9d6c4b",
+    "BlueMuse.App/MuseManagement/MuseGyroscopeSamples.cs": "442234266822335402baa5996ac813ec00d72efe08c24a62dd8d36284ac53269",
+    "BlueMuse.App/MuseManagement/MuseTelemetrySamples.cs": "f38c9a6e76e7f65d2355f54d4937e04fe2e51e32fcd27da48455d9bff89d4e8f",
+    "BlueMuse.App/MuseManagement/MusePPGSamples.cs": "7cd3288211368581940ace9db4b13132b7cf122c5d4920fe4d63c69d7d639fdb",
+    "BlueMuse.App/Athena/AthenaSession.cs": "c421467289385ddf78e8d574adfc36d421c4cc2281e226c088b63ecdae7be408",
+    "BlueMuse.App/Athena/AthenaPacketParser.cs": "e4ffa72206e42b9825f56f7ab54861ff39e8ab9d3a222c9f1fffda7df17bba8c",
+    "BlueMuse.App/Athena/AthenaDecoders.cs": "266cb8f22870356a3d87b10fbf0fc1752e396f8e1bb152cf9c09d4816bd20feb"
+  }
+}
