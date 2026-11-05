@@ -2,7 +2,7 @@
 
 ![BlueMuse for macOS: stream Muse EEG headsets to Lab Streaming Layer](docs/images/repository-banner.svg)
 
-**macOS app to stream data from Muse EEG headsets via LSL (Lab Streaming Layer), with live signal graphs and one-click four-channel EEG streaming.**
+**macOS app to stream data from Muse EEG headsets via LSL (Lab Streaming Layer), with live signal graphs and native Bluetooth device management.**
 
 A native SwiftUI and CoreBluetooth adaptation of [kowalej/BlueMuse](https://github.com/kowalej/BlueMuse),
 originally built for Windows. Connect a Muse headband to your Mac, inspect the signals,
@@ -23,14 +23,9 @@ macOS 13+ · Universal Apple Silicon + Intel build · GPL-3.0 · Experimental co
 - **Device profiles:** Muse 2016, Muse 2, Muse S, Muse S Athena and Smith Lowdown Focus; see the validation table below.
 - Publish EEG, accelerometer, gyroscope, PPG and telemetry through Lab Streaming Layer.
 - View separate channel traces with time-window and pause-display controls.
-- Click **Start MUSE_4CH** to publish TP9, AF7, AF8 and TP10 directly—no Python bridge needed.
 - Choose Windows-compatible or smoothed timestamp assignment.
 - Configure float32/float64 samples, clock domains and optional secondary timestamps.
 - Start, stop, inspect, reset and explicitly disconnect headsets; control the app through `bluemuse:` URLs.
-
-The app publishes data. A receiver, classifier or recorder subscribes separately.
-There is no account, fixed destination or cloud service. LSL peers on the local network
-may discover and receive streams where networking permits.
 
 ## Download and install
 
@@ -80,56 +75,13 @@ integrity checksum and a manifest stating signing and notarization status. Keep 
 binaries out of source commits and attach the DMG/checksum/manifest to GitHub Releases. See [RELEASING.md](RELEASING.md) for GitHub Releases and future
 Developer ID signing/notarization support.
 
+## Use the app
+
 1. Allow Bluetooth access when macOS asks.
 2. Turn on the headset and keep it nearby. Close other apps connected to it.
 3. Select the headset. **Start Stream** publishes enabled sensor streams and starts plots.
-4. **Start MUSE_4CH** also starts EEG if necessary and publishes the four-channel output.
-5. **Stop MUSE_4CH** closes that output only. **Stop Stream** retains Bluetooth when
-   the connection is healthy; **Disconnect** releases it and suppresses auto-reconnection.
-
-The **ⓘ** button beside Four-channel LSL explains stream details and provides receiver code.
-
-## Receive the four EEG channels
-
-```text
-Muse → BlueMuse for macOS → MUSE_4CH → receiver / classifier / recorder
-```
-
-| Property | Value |
-| --- | --- |
-| Name / type | `MUSE_4CH` / `EEG` |
-| Order | TP9, AF7, AF8, TP10 |
-| Format / units | float32 / microvolts |
-| Nominal rate | 256 samples per second |
-| Timestamps | Preserved from the app's EEG stream, using the selected clock and timing mode |
-| Source identity | `muse_4ch_bridge_BlueMuse:<peripheral UUID>:EEG` |
-
-Run **Start MUSE_4CH** in the app, then in another Terminal:
-
-```sh
-python3 -m venv .venv
-.venv/bin/python -m pip install -r examples/requirements.txt
-.venv/bin/python examples/receive_muse.py
-```
-
-To record rather than just receive:
-
-```sh
-.venv/bin/python examples/receive_muse.py --csv session.csv --seconds 60
-```
-
-The example refuses to overwrite an existing CSV. Its columns are `timestamp,TP9,AF7,AF8,TP10`.
-For several headsets, pass `--source-id` using the identifier shown in the info panel.
-Stop the receiver with Ctrl+C. Closing a receiver does not stop the headset.
-
-A classifier belongs in the receiver: buffer samples into appropriate windows, apply
-the preprocessing used during training, and pass those windows to your model. No
-classifier or research recording is included. [Receiver details](docs/RECEIVERS.md).
-
-The built-in four-channel output uses standard LSL publishing and public Muse electrode
-labels. The minimal receiver example demonstrates ordinary LSL subscription and optional
-CSV recording. It contains no classifier, model weights, training dataset, subject data,
-or experiment-specific analysis pipeline.
+4. **Stop Stream** retains Bluetooth when the connection is healthy; **Disconnect**
+   releases it and suppresses auto-reconnection.
 
 ## Choose timestamp behavior
 
@@ -167,6 +119,57 @@ The test suite includes 1,300 packet fixtures with 18,000 numeric values generat
 by the unchanged upstream C# decoders, plus original-C# timestamp fixtures, settings
 migration, malformed-packet handling, LSL outlet/inlet transmission and UI rendering.
 See [the audit](docs/PARITY-AUDIT.md) for provenance, checks and remaining differences.
+
+## LSL streaming details
+
+The app publishes data. A receiver, classifier or recorder subscribes separately.
+There is no account, fixed destination or cloud service. LSL peers on the local network
+may discover and receive streams where networking permits.
+
+Enabled sensors publish their own LSL streams. Configure sample precision, clock domain
+and optional secondary timestamps in Settings; see [timing details](docs/TIMING.md).
+
+### Optional four-channel EEG output
+
+```text
+Muse → BlueMuse for macOS → MUSE_4CH → receiver / classifier / recorder
+```
+
+| Property | Value |
+| --- | --- |
+| Name / type | `MUSE_4CH` / `EEG` |
+| Order | TP9, AF7, AF8, TP10 |
+| Format / units | float32 / microvolts |
+| Nominal rate | 256 samples per second |
+| Timestamps | Preserved from the app's EEG stream, using the selected clock and timing mode |
+| Source identity | `muse_4ch_bridge_BlueMuse:<peripheral UUID>:EEG` |
+
+**Start MUSE_4CH** starts EEG if necessary and publishes this additional output.
+**Stop MUSE_4CH** closes only that output. The **ⓘ** button beside Four-channel LSL
+explains stream details and provides receiver code.
+
+To use the optional Python receiver, start the four-channel output in the app, then
+run in a Terminal:
+
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install -r examples/requirements.txt
+.venv/bin/python examples/receive_muse.py
+```
+
+To record rather than just receive:
+
+```sh
+.venv/bin/python examples/receive_muse.py --csv session.csv --seconds 60
+```
+
+The example refuses to overwrite an existing CSV. Its columns are `timestamp,TP9,AF7,AF8,TP10`.
+For several headsets, pass `--source-id` using the identifier shown in the info panel.
+Stop the receiver with Ctrl+C. Closing a receiver does not stop the headset.
+
+A classifier belongs in the receiver: buffer samples into appropriate windows, apply
+the preprocessing used during training, and pass those windows to your model. No
+classifier or research recording is included. [Receiver details](docs/RECEIVERS.md).
 
 ## Test
 
