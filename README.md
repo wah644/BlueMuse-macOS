@@ -185,8 +185,9 @@ dotnet run --project Tests/BlueMuse.Parity.Tests --no-restore -- --athena-self-c
 ```
 
 Tests publish short-lived synthetic LSL streams and require local networking. UI
-rendering tests use synthetic signals. The macOS CI workflow runs tests and builds
-the app; a workflow file is not evidence of a completed remote CI run.
+rendering tests use synthetic signals. Run the local checks before pushing changes;
+ordinary pushes and pull requests do not trigger automated checks. Version tags
+still trigger the separate release workflow, which tests and packages the app.
 
 ## Troubleshooting
 
@@ -208,7 +209,7 @@ examples/         Receiver with optional CSV recording
 scripts/          Build, DMG packaging and diagnostic tools
 Resources/        Application icon
 docs/             Timing, receivers, validation and preview
-.github/          macOS test/build workflow
+.github/          Release packaging workflow and repository metadata
 ```
 
 ## Credits and license
